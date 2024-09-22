@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxnkfx66tt6yk"]
+[gd_scene load_steps=11 format=3 uid="uid://bxnkfx66tt6yk"]
 
 [ext_resource type="Script" path="res://scenes3d/lines3d/test3dlines.gd" id="1_dfsrl"]
+[ext_resource type="PackedScene" uid="uid://c36r0lpflcakc" path="res://scenes3d/camera3d/camera_3d.tscn" id="2_j3y1n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_57wq8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -10,12 +11,24 @@ ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 sky_material = SubResource("ProceduralSkyMaterial_57wq8")
 
 [sub_resource type="Environment" id="Environment_583bs"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0.212305, 0.212305, 0.212305, 1)
 sky = SubResource("Sky_7xmvb")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ewg4w"]
+[sub_resource type="LabelSettings" id="LabelSettings_isap5"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6iycv"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_ulur6"]
+albedo_color = Color(1, 0.478431, 0.623529, 0.0509804)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bmv4s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wxfa3"]
+size = Vector3(0.1, 1, 0.1)
 
 [node name="test3dlines" type="Node3D"]
 script = ExtResource("1_dfsrl")
@@ -24,13 +37,42 @@ script = ExtResource("1_dfsrl")
 environment = SubResource("Environment_583bs")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.749998, -0.125004, 0.64952, 0.500003, -0.749999, 0.43301, 0.433012, 0.649519, 0.625001, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.960255, 0.279125, 0, -0.279125, 0.960255, 0, 0.602776, 1.78901)
+[node name="Camera3D" parent="." instance=ExtResource("2_j3y1n")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -3, 0.72, 3)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 148.0
+offset_bottom = 43.0
+
+[node name="height_label" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "height"
+label_settings = SubResource("LabelSettings_isap5")
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375, 0, 0)
-visible = false
-mesh = SubResource("ArrayMesh_ewg4w")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_6iycv")
+skeleton = NodePath("../CanvasLayer/VBoxContainer/HSlider")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+material_override = SubResource("ORMMaterial3D_ulur6")
+mesh = SubResource("PlaneMesh_bmv4s")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944, 0.5, -1)
+mesh = SubResource("BoxMesh_wxfa3")
+
+[connection signal="drag_ended" from="CanvasLayer/VBoxContainer/HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="value_changed" from="CanvasLayer/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
