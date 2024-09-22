@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfitex8rxnnqi"]
+
+[ext_resource type="PackedScene" uid="uid://daf80b26m4c4p" path="res://Scenes2d/Cars/car1.tscn" id="1_lxtdv"]
+[ext_resource type="Script" path="res://Scenes2d/Main2d/main_2d.gd" id="1_tj8w7"]
+[ext_resource type="PackedScene" uid="uid://bo8mibrp52t5w" path="res://Scenes2d/GameControls/game_controls.tscn" id="2_fs0xe"]
+[ext_resource type="PackedScene" uid="uid://d81vjhhv46sy" path="res://Scenes2d/Grid2d/grid_2d.tscn" id="3_tk7fn"]
+
+[node name="Main2d" type="Node2D"]
+script = ExtResource("1_tj8w7")
+
+[node name="Grid2d" parent="." instance=ExtResource("3_tk7fn")]
+
+[node name="Car1" parent="." instance=ExtResource("1_lxtdv")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="GameControls" parent="Control" instance=ExtResource("2_fs0xe")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2

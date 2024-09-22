@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo8mibrp52t5w"]
+
+[ext_resource type="Script" path="res://Scenes2d/GameControls/game_controls.gd" id="1_17jcp"]
+
+[node name="GameControls" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_17jcp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -296.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="StartButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Start"
+
+[node name="StopButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Stop"
+
+[node name="DrawPath" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Draw Path"
+
+[node name="SetPath" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Set Path and Run"
+
+[node name="ClearPath" type="Button" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Clear Path"
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/SetPath" to="." method="_on_set_path_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/ClearPath" to="." method="_on_clear_path_pressed"]

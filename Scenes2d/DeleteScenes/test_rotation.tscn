@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d24yo5yc3cq2a"]
+
+[ext_resource type="Script" path="res://Scenes2d/DeleteScenes/test_rotation.gd" id="1_pokay"]
+[ext_resource type="Texture2D" uid="uid://bjhyl7yjby3p" path="res://Assets/car01.png" id="2_4bu8y"]
+
+[node name="TestRotation" type="Node2D"]
+script = ExtResource("1_pokay")
+
+[node name="Car01" type="Sprite2D" parent="."]
+position = Vector2(543, 276)
+texture = ExtResource("2_4bu8y")
