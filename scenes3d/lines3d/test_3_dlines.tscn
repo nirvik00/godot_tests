@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxnkfx66tt6yk"]
+[gd_scene load_steps=15 format=3 uid="uid://bxnkfx66tt6yk"]
 
 [ext_resource type="Script" path="res://scenes3d/lines3d/test3dlines.gd" id="1_dfsrl"]
 [ext_resource type="PackedScene" uid="uid://c36r0lpflcakc" path="res://scenes3d/camera3d/camera_3d.tscn" id="2_j3y1n"]
+[ext_resource type="Shader" path="res://scenes3d/lines3d/skyscraper.gdshader" id="3_sn4t8"]
+[ext_resource type="Shader" path="res://scenes3d/lines3d/simple_water.gdshader" id="3_xpxri"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_57wq8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -22,13 +24,27 @@ font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6iycv"]
 
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_ulur6"]
-albedo_color = Color(1, 0.478431, 0.623529, 0.0509804)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfmlj"]
+render_priority = 0
+shader = ExtResource("3_xpxri")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_bmv4s"]
+material = SubResource("ShaderMaterial_gfmlj")
+size = Vector2(100, 100)
+subdivide_width = 100
+subdivide_depth = 100
 
 [sub_resource type="BoxMesh" id="BoxMesh_wxfa3"]
 size = Vector3(0.1, 1, 0.1)
+subdivide_width = 32
+subdivide_height = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gidd4"]
+render_priority = 0
+shader = ExtResource("3_sn4t8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmgf0"]
+next_pass = SubResource("ShaderMaterial_gidd4")
 
 [node name="test3dlines" type="Node3D"]
 script = ExtResource("1_dfsrl")
@@ -36,12 +52,8 @@ script = ExtResource("1_dfsrl")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_583bs")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.749998, -0.125004, 0.64952, 0.500003, -0.749999, 0.43301, 0.433012, 0.649519, 0.625001, 0, 0, 0)
-shadow_enabled = true
-
 [node name="Camera3D" parent="." instance=ExtResource("2_j3y1n")]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -3, 0.72, 3)
+transform = Transform3D(0.707107, 0.188966, -0.68139, 0, 0.96363, 0.267238, 0.707107, -0.188966, 0.68139, -5, 1.5, 5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -66,13 +78,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_6iycv")
 skeleton = NodePath("../CanvasLayer/VBoxContainer/HSlider")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-material_override = SubResource("ORMMaterial3D_ulur6")
+[node name="GroundPlane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00167537, 0.00429076, -0.00030756)
 mesh = SubResource("PlaneMesh_bmv4s")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944, 0.5, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944, 0.5, -2.02771)
 mesh = SubResource("BoxMesh_wxfa3")
+surface_material_override/0 = SubResource("StandardMaterial3D_rmgf0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.93971, 0)
 
 [connection signal="drag_ended" from="CanvasLayer/VBoxContainer/HSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="value_changed" from="CanvasLayer/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]

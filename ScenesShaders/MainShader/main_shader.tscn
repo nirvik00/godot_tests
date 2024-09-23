@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://buru35ani4hpx"]
+
+[ext_resource type="Shader" path="res://ScenesShaders/MainShader/icon.gdshader" id="1_q1gqd"]
+[ext_resource type="Texture2D" uid="uid://vjjcr20nmsfy" path="res://icon.svg" id="1_u8wq0"]
+[ext_resource type="Texture2D" uid="uid://umrvt8qif3xn" path="res://Assets/grass_tuft.png" id="3_eyhkj"]
+[ext_resource type="Shader" path="res://ScenesShaders/MainShader/grass2.gdshader" id="3_ssp8k"]
+[ext_resource type="Shader" uid="uid://cjjkb1ax3eh87" path="res://ScenesShaders/MainShader/grass.tres" id="4_nx647"]
+[ext_resource type="Texture2D" uid="uid://b3sqk77m4wm4x" path="res://Assets/boy.png" id="6_ptwhd"]
+[ext_resource type="Shader" uid="uid://wlvedf7emwey" path="res://ScenesShaders/MainShader/color_replacement.tres" id="7_5xweq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q1pt1"]
+shader = ExtResource("1_q1gqd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvg2d"]
+shader = ExtResource("3_ssp8k")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kdvm"]
+shader = ExtResource("4_nx647")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ti65t"]
+shader = ExtResource("7_5xweq")
+
+[node name="MainShader" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_q1pt1")
+position = Vector2(63, 71)
+texture = ExtResource("1_u8wq0")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+position = Vector2(206, 73)
+texture = ExtResource("1_u8wq0")
+
+[node name="Polygon2D" type="Polygon2D" parent="Icon2"]
+
+[node name="GrassTuft" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_yvg2d")
+position = Vector2(701, 139)
+texture = ExtResource("3_eyhkj")
+
+[node name="GrassTuft2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6kdvm")
+position = Vector2(898, 149)
+texture = ExtResource("3_eyhkj")
+
+[node name="Boy" type="Sprite2D" parent="."]
+position = Vector2(139, 436)
+texture = ExtResource("6_ptwhd")
+
+[node name="Boy2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ti65t")
+position = Vector2(430, 444)
+texture = ExtResource("6_ptwhd")
+
+[node name="ColorPicker" type="ColorPicker" parent="."]
+texture_filter = 1
+offset_left = -327.0
+offset_top = 52.0
+offset_right = -29.0
+offset_bottom = 628.0
+color = Color(0.00784314, 1, 0.0117647, 1)
